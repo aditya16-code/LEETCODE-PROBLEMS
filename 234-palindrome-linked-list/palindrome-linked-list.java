@@ -27,6 +27,7 @@ class Solution {
             prev=slow;
             slow=next;
         }
+        //now place a pointer on the head of 1st half and another pointer at the head of 2nd half(prev is the head of second half after reversing the LL)
         ListNode left=head;
         ListNode right=prev;
         while(right!=null){
