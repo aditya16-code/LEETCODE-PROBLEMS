@@ -18,7 +18,7 @@ class Solution {
         List<List<Integer>>list=new LinkedList<List<Integer>>();
         if (root==null)return list;
         Queue<TreeNode>queue=new LinkedList<>();
-        queue.offer(root);
+        queue.add(root);
         boolean direction=true;
         while(!queue.isEmpty()){
             int size=queue.size();
