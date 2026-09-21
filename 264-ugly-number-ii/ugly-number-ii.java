@@ -1,23 +1,33 @@
-class Solution {
-    public int nthUglyNumber(int n) {
-        int[] primes = {2, 3, 5};
-        PriorityQueue<Long> uglyHeap = new PriorityQueue<>();
-        HashSet<Long> visited = new HashSet<>();
-        
-        uglyHeap.add(1L);
-        visited.add(1L);
-        
-        long curr = 1L;
-        for (int i = 0; i < n; i++) {
-            curr = uglyHeap.poll();
-            for (int prime : primes) {
-                long new_ugly = curr * prime;
-                if (!visited.contains(new_ugly)) {
-                    uglyHeap.add(new_ugly);
-                    visited.add(new_ugly);
-                }
-            }
+class Ugly {
+    private static final int LIMIT = 1690;
+    public int[] nums = new int[LIMIT];
+
+    Ugly() {
+        nums[0] = 1;
+        int ugly, index2 = 0, index3 = 0, index5 = 0;
+
+        for (int i = 1; i < LIMIT; i++) {
+            ugly = Math.min(
+                    Math.min(nums[index2] * 2, nums[index3] * 3),
+                    nums[index5] * 5
+            );
+
+            nums[i] = ugly;
+
+            if (ugly == nums[index2] * 2)
+                ++index2;
+            if (ugly == nums[index3] * 3)
+                ++index3;
+            if (ugly == nums[index5] * 5)
+                ++index5;
         }
-        return (int)curr;
+    }
+}
+
+class Solution {
+    public static Ugly ugly = new Ugly();
+
+    public int nthUglyNumber(int n) {
+        return ugly.nums[n - 1];
     }
 }
