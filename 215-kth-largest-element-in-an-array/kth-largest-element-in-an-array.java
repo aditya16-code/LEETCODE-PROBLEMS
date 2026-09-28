@@ -4,7 +4,7 @@ class Solution {
         for(int i=0;i<nums.length;i++){
             heap.offer(nums[i]);
         }
-        for(int i=0;i<nums.length;i++){
+        for(int i=0;i<nums.length-k;i++){
             if(heap.size()>k){
                 heap.poll();
             }
