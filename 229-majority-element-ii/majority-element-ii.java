@@ -1,17 +1,34 @@
 class Solution {
     public List<Integer> majorityElement(int[] nums) {
         List<Integer>ans=new ArrayList<>();
+        int count1=0;int can1=Integer.MIN_VALUE;
+        int count2=0;int can2=Integer.MIN_VALUE;
         int n=nums.length;
-        Map<Integer,Integer>map=new HashMap<>();
-        int minel=(n/3)+1;
         for(int i=0;i<n;i++){
-        map.put(nums[i],map.getOrDefault(nums[i],0)+1);
-        if(map.get(nums[i])==minel){
-            ans.add(nums[i]);
-        }
-        if(ans.size()==2){ break;}
-        }
-        return ans;
-       
+         if(count1==0&&nums[i]!=can2){
+            can1=nums[i];
+            count1=1;
+         }
+         else if(count2==0&&nums[i]!=can1){
+            can2=nums[i];
+            count2=1;
+         }
+         else if(nums[i]==can1)count1++;
+         else if(nums[i]==can2)count2++;
+         else{
+            count1--;
+            count2--;
+         }
+         
+    }count1=0;
+    count2=0;
+    for(int i=0;i<n;i++){
+        if(nums[i]==can1)count1++;
+        if(nums[i]==can2)count2++;
     }
-}
+    if(count1>=((n/3)+1))ans.add(can1);
+    if(count2>=((n/3)+1))ans.add(can2);
+    return ans;
+    }
+
+    }
