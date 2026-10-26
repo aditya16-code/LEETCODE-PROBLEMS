@@ -1,17 +1,18 @@
 class Solution {
     public int[] findErrorNums(int[] nums) {
         int n=nums.length;
-        int rep=-1;
-        int miss=-1;
-        int hasharr[]=new int[n+1];
+        long sn=(long)(n*(n+1))/2;
+        long sn2=(long)n*(n+1)*(2*n+1)/6;
+        long s=0;long s2=0;
         for(int i=0;i<n;i++){
-            hasharr[nums[i]]++;
+            s+=(long)nums[i];
+            s2+=(long)nums[i]*(long)nums[i];
         }
-        for(int i=1;i<=n;i++){
-           if(hasharr[i]==2){ rep=i;}
-           else if(hasharr[i]==0){miss=i;}
-           if(miss!=-1&&rep!=-1){break;}
-        }
-        return new int[]{ rep,miss};
+        long eq1=s-sn;
+        long eq2=s2-sn2;
+        eq2=eq2/eq1;
+        long x=(eq1+eq2)/2;
+        long y=x-eq1;
+        return new int[]{(int)x,(int)y};
     }
 }
