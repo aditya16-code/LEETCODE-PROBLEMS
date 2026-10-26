@@ -1,39 +1,22 @@
-
-import java.util.*;
-
 class Solution {
+    boolean[] visited;
+    int count = 0;
+    List<List<Integer>> list;
+    int n;
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-        int n = rooms.size();
-
-        List<Set<Integer>> sets = new ArrayList<>();
-
-        // Convert every sublist into a Set
-        for (List<Integer> room : rooms) {
-            sets.add(new HashSet<>(room));
-        }
-
-        boolean[] visited = new boolean[n];
-
-        dfs(0, sets, visited);
-
-        for (boolean v : visited) {
-            if (!v) {
-                return false;
-            }
-        }
-
-        return true;
+        n = rooms.size();
+        visited = new boolean[n];
+        list = rooms;
+        dfs(0);
+        return count == n;
     }
-
-    private void dfs(int room, List<Set<Integer>> sets,
-                     boolean[] visited) {
-        visited[room] = true;
-
-        // Check keys of the current room
-        for (int nextRoom : sets.get(room)) {
-            if (!visited[nextRoom]) {
-                dfs(nextRoom, sets, visited);
-            }
+    void dfs(int v) {
+        if(visited[v] == true) return;
+        visited[v] = true;
+        count++;
+        if(count == n) return;
+        for(int node : list.get(v)) {
+            dfs(node);
         }
     }
 }
