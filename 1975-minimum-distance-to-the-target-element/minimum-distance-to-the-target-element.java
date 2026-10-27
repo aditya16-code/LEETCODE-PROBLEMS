@@ -4,7 +4,10 @@ class Solution {
         for(int i=0;i<nums.length;i++){
             if(nums[i]==target){
                 int d=Math.abs(i-start);
-                min=Math.min(min,d);
+                // min=Math.min(min,d);
+                if(d<min){
+                    min=d;
+                }
             }
         }
         return min;
