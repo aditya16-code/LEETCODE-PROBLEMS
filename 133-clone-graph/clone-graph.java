@@ -1,44 +1,24 @@
-/*
-// Definition for a Node.
-class Node {
-    public int val;
-    public List<Node> neighbors;
-    public Node() {
-        val = 0;
-        neighbors = new ArrayList<Node>();
-    }
-    public Node(int _val) {
-        val = _val;
-        neighbors = new ArrayList<Node>();
-    }
-    public Node(int _val, ArrayList<Node> _neighbors) {
-        val = _val;
-        neighbors = _neighbors;
-    }
-}
-*/
-
 class Solution {
+    private Map<Node, Node> cloned = new HashMap<>();
+
     public Node cloneGraph(Node node) {
-        if(node==null)return null;
-         Node visited[]=new Node[101];
-         Stack<Node>stack= new Stack<>();
+        if (node == null) return null;
 
+        // 1. Already cloned? Reuse it (this stops cycles)
+        if (cloned.containsKey(node)) {
+            return cloned.get(node);
+        }
 
-         visited[node.val]=new Node(node.val);
-         stack.push(node);
-         while(!stack.isEmpty()){
-            Node cur=stack.pop();
+        // 2. Create the clone and register it BEFORE visiting neighbors
+        Node copy = new Node(node.val);
+        cloned.put(node, copy);
 
-            for(Node nei:cur.neighbors){
-                if(visited[nei.val]==null){
-                    visited[nei.val]= new Node(nei.val);
-                    stack.push(nei);
-                }
-                visited[cur.val].neighbors.add(visited[nei.val]);
-            }
+        // 3. Clone every neighbor (recursively) and attach it
+        for (Node nei : node.neighbors) {
+            copy.neighbors.add(cloneGraph(nei));
+        }
 
-         }
-        return visited[node.val];
+        // 4. Return the finished clone
+        return copy;
     }
 }
