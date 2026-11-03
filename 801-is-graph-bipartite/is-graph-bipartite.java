@@ -1,35 +1,30 @@
 class Solution {
     public boolean isBipartite(int[][] graph) {
         int n=graph.length;
-        boolean vis[]=new boolean[n];
-        int depth []= new int [n];
-        for(int i=0;i<n;i++){
-            if(!vis[i]){
-                if(dfs(graph,i,-1,0,vis,depth)){
-                    return false;
+        int color[]=new int[n];
+            Arrays.fill(color,-1);
+            Queue<Integer>q= new LinkedList<>();
+            for(int i=0;i<n;i++){
+                if(color[i]==-1){
+                    q.add(i);
+                    color[i]=0;
+
+
+
+                while(!q.isEmpty()){
+                    int node=q.poll();
+                    for(int nbr:graph[node]){
+                        if(color[nbr]==-1){
+                            color[nbr]=1-color[node];
+                            q.add(nbr);
+                        }
+                        else if(color[nbr]==color[node]){
+                            return false;
+                        }
+                    }
+                }
                 }
             }
-        }
-        return true;
-    }
-    public boolean dfs(int graph[][],int node,int parent,int curr,boolean[]vis,int depth[]){
-        vis[node]=true;
-        depth[node]=curr;
-        for(int nbr:graph[node]){
-            if(nbr==parent)
-            continue;
-            if(!vis[nbr]){
-                if(dfs(graph,nbr,node,curr+1,vis,depth)){
-                    return true;
-                }
-            }
-            else{
-                int cycleLength=Math.abs(depth[node]-depth[nbr])+1;
-                if(cycleLength%2==1){
-                    return true;
-                }
-            }
-        }
-        return false;
+            return true;
     }
 }
